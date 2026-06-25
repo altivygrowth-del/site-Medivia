@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medíva – Clínica Médica</title>
+  <meta name="description" content="Medíva Clínica Médica — atendimento humanizado, especialistas dedicados e cuidado integral à sua saúde em Guaratuba, PR." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:   #f8f5f0;
+      --white:   #ffffff;
+      --navy:    #0d1f35;
+      --navy2:   #162d4a;
+      --gold:    #b89c6e;
+      --gold2:   #d4b88a;
+      --sage:    #7a9e8e;
+      --text:    #2c2c2c;
+      --muted:   #6b7280;
+      --border:  #e5ddd0;
+      --radius:  12px;
+      --shadow:  0 4px 40px rgba(13,31,53,.10);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw;
+      height: 72px;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--navy);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-cta {
+      background: var(--navy);
+      color: var(--white) !important;
+      padding: .55rem 1.4rem;
+      border-radius: 50px;
+      font-size: .78rem !important;
+      font-weight: 500 !important;
+      letter-spacing: .06em;
+      transition: background .2s, transform .2s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: .3s; }
+
+    /* ── Hero ── */
+    #home {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('./medica.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      transform: scale(1.03);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    /* Gradient overlay — left side darker for text legibility, right fades */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right,
+          rgba(8,18,32,.82) 0%,
+          rgba(8,18,32,.55) 55%,
+          rgba(8,18,32,.15) 100%),
+        linear-gradient(to top,
+          rgba(8,18,32,.7) 0%,
+          transparent 50%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 160px 6vw 80px;
+      max-width: 700px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(184,156,110,.18);
+      border: 1px solid rgba(184,156,110,.5);
+      color: var(--gold2);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .35rem .9rem;
+      border-radius: 50px;
+      margin-bottom: 1.6rem;
+    }
+    .hero-tag::before { content: '✦'; font-size: .6rem; }
+    .hero-title {
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 1.4rem;
+      text-shadow: 0 2px 24px rgba(0,0,0,.2);
+    }
+    .hero-title strong { font-weight: 600; font-style: italic; color: var(--gold2); }
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,.75);
+      max-width: 480px;
+      margin-bottom: 2.6rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--white);
+      padding: .9rem 2rem;
+      border-radius: 50px;
+      font-size: .88rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      transition: background .25s, transform .2s, box-shadow .25s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,156,110,.45); }
+    .btn-outline {
+      border: 1.5px solid rgba(255,255,255,.6);
+      color: var(--white);
+      padding: .9rem 2rem;
+      border-radius: 50px;
+      font-size: .88rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      transition: background .25s, border-color .25s, transform .2s;
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,.08);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.9); transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; gap: 2.4rem; margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.18);
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 600;
+      color: var(--gold2);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .72rem;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-top: .25rem;
+    }
+    /* Floating badge bottom-right */
+    .hero-badge {
+      position: absolute; bottom: 2.5rem; right: 6vw; z-index: 3;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(16px);
+      border-radius: 18px;
+      padding: 1.1rem 1.5rem;
+      display: flex; align-items: center; gap: .9rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+      animation: floatBadge 3s ease-in-out infinite;
+    }
+    @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .badge-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(34,197,94,.2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.2)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,.08)} }
+    .badge-text strong { display: block; font-size: .88rem; font-weight: 600; color: var(--navy); }
+    .badge-text span { font-size: .75rem; color: var(--muted); }
+
+    /* ── Section Shared ── */
+    section { padding: 100px 6vw; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      color: var(--gold);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+    }
+    .section-label::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; font-weight: 400; }
+    .section-sub {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ── About ── */
+    #about {
+      background: var(--navy);
+      color: var(--white);
+    }
+    #about .section-label { color: var(--gold2); }
+    #about .section-label::before { background: var(--gold2); }
+    #about .section-title { color: var(--white); }
+    #about .section-sub { color: rgba(255,255,255,.6); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2.4rem; }
+    .about-feat {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      transition: background .25s;
+    }
+    .about-feat:hover { background: rgba(255,255,255,.1); }
+    .feat-icon {
+      font-size: 1.4rem;
+      margin-bottom: .6rem;
+    }
+    .feat-title { font-size: .88rem; font-weight: 600; color: var(--white); margin-bottom: .25rem; }
+    .feat-desc { font-size: .78rem; color: rgba(255,255,255,.5); line-height: 1.5; }
+    .about-image-side {
+      position: relative;
+    }
+    .about-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 24px;
+      padding: 2.4rem;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      color: rgba(255,255,255,.9);
+      margin-bottom: 1.6rem;
+    }
+    .about-quote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--gold);
+      line-height: 0;
+      vertical-align: -1rem;
+      margin-right: .2rem;
+    }
+    .crm-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(184,156,110,.2);
+      border: 1px solid rgba(184,156,110,.35);
+      color: var(--gold2);
+      font-size: .75rem;
+      font-weight: 500;
+      padding: .4rem .9rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .about-specialties { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.4rem; }
+    .spec-pill {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.75);
+      font-size: .74rem;
+      padding: .35rem .85rem;
+      border-radius: 50px;
+    }
+
+    /* ── Specialties / Services ── */
+    #specialties { background: var(--cream); }
+    .spec-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1rem; }
+    .specialties-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+    .spec-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      cursor: default;
+    }
+    .spec-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: var(--gold2); }
+    .spec-card-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(184,156,110,.15) 0%, rgba(122,158,142,.15) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .spec-card-title { font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: .5rem; }
+    .spec-card-desc { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+    .spec-card-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Prices ── */
+    #prices { background: var(--white); }
+    .prices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; margin-top: 3rem; }
+    .price-card {
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 1.8rem;
+      transition: border-color .25s, transform .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--sage));
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .price-card:hover { border-color: var(--gold2); transform: translateY(-4px); }
+    .price-card:hover::before { opacity: 1; }
+    .price-card.featured {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: var(--white);
+    }
+    .price-card.featured::before { opacity: 1; }
+    .price-name { font-size: .88rem; font-weight: 600; color: inherit; margin-bottom: .6rem; }
+    .price-card.featured .price-name { color: rgba(255,255,255,.8); }
+    .price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .price-card.featured .price-value { color: var(--gold2); }
+    .price-value small { font-size: .9rem; font-weight: 400; }
+    .price-note { font-size: .75rem; color: var(--muted); margin-top: .5rem; }
+    .price-card.featured .price-note { color: rgba(255,255,255,.5); }
+    .badge-featured {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      background: var(--gold);
+      color: var(--white);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border-radius: 50px;
+    }
+
+    /* ── Testimonials ── */
+    #testimonials { background: var(--cream); }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; margin-top: 3rem; }
+    .test-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .test-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .test-stars { color: var(--gold); font-size: 1rem; letter-spacing: .1em; margin-bottom: 1rem; }
+    .test-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--navy);
+      margin-bottom: 1.4rem;
+    }
+    .test-author { display: flex; align-items: center; gap: .75rem; }
+    .test-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage), var(--navy));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+      font-size: .85rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .test-name { font-size: .84rem; font-weight: 600; color: var(--navy); }
+    .test-sub { font-size: .74rem; color: var(--muted); }
+
+    /* ── Contact ── */
+    #contact { background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.6rem; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color .25s;
+    }
+    .contact-item:hover { border-color: var(--gold2); }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(184,156,110,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-label { font-size: .72rem; font-weight: 600; color: var(--gold); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+    .contact-val { font-size: .9rem; color: var(--navy); font-weight: 500; }
+    .contact-val small { font-size: .8rem; color: var(--muted); font-weight: 400; }
+
+    .schedule-form {
+      background: var(--cream);
+      border-radius: 24px;
+      padding: 2.4rem;
+      border: 1px solid var(--border);
+    }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 1.6rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: .78rem; font-weight: 600; color: var(--navy); letter-spacing: .04em; margin-bottom: .45rem; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: .8rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: .88rem;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,156,110,.15); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-form {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      padding: 1rem;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: background .25s, transform .2s;
+      margin-top: .6rem;
+    }
+    .btn-form:hover { background: var(--gold); transform: translateY(-2px); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.55);
+      padding: 3rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    footer .footer-logo span { color: var(--gold); }
+    footer p { font-size: .78rem; }
+    footer .footer-links { display: flex; gap: 1.6rem; }
+    footer .footer-links a { font-size: .78rem; color: rgba(255,255,255,.45); transition: color .2s; }
+    footer .footer-links a:hover { color: var(--gold2); }
+
+    /* ── Floating CTA ── */
+    .floating-cta {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 99;
+      background: var(--gold);
+      color: var(--white);
+      padding: .9rem 1.6rem;
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      box-shadow: 0 8px 32px rgba(184,156,110,.5);
+      display: flex; align-items: center; gap: .5rem;
+      transition: transform .25s, box-shadow .25s;
+      animation: floatIn .5s .4s both;
+    }
+    .floating-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(184,156,110,.6); }
+    @keyframes floatIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── Scroll animations ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .hero-badge { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .specialties-grid { grid-template-columns: 1fr 1fr; }
+      .test-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 4vw; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--white); padding: 1.5rem 4vw; border-bottom: 1px solid var(--border); gap: 1rem; }
+      .hamburger { display: flex; }
+      section { padding: 70px 4vw; }
+      .hero-content { padding: 130px 4vw 70px; }
+      .hero-stats { gap: 1.4rem; }
+      .specialties-grid { grid-template-columns: 1fr; }
+      .test-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Med<span>í</span>va</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Início</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#specialties">Especialidades</a></li>
+    <li><a href="#prices">Preços</a></li>
+    <li><a href="#testimonials">Avaliações</a></li>
+    <li><a href="#contact" class="nav-cta">Agendar consulta</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content reveal">
+    <div class="hero-tag">Clínica Médica · Guaratuba, PR</div>
+    <h1 class="hero-title">
+      Cuidado <strong>excepcional</strong><br/>para a sua saúde
+    </h1>
+    <p class="hero-desc">
+      Atendimento humanizado, especialistas dedicados e uma experiência médica que respeita você em cada detalhe. Sua saúde merece o melhor.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <span>📅</span> Agendar consulta
+      </a>
+      <a href="#about" class="btn-outline">Conheça a clínica</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">19+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-num">5k+</div>
+        <div class="stat-label">Pacientes atendidos</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Atendimento humano</div>
+      </div>
+    </div>
+  </div>
+  <!-- Floating availability badge -->
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    <div class="badge-text">
+      <strong>Disponível para consulta</strong>
+      <span>Teleconsulta ou presencial · Guaratuba</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="section-label">Sobre a Medíva</div>
+      <h2 class="section-title">Medicina com <em>alma e propósito</em></h2>
+      <p class="section-sub">
+        Com 19 anos de experiência em atenção primária à saúde, a Clínica Medíva oferece atendimento integral com foco em diagnóstico preciso, prevenção e acompanhamento contínuo. Cada paciente é tratado como único.
+      </p>
+      <div class="about-features">
+        <div class="about-feat">
+          <div class="feat-icon">🩺</div>
+          <div class="feat-title">Diagnóstico preciso</div>
+          <div class="feat-desc">Avaliação clínica detalhada e orientada ao paciente</div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">💊</div>
+          <div class="feat-title">Tratamento personalizado</div>
+          <div class="feat-desc">Plano terapêutico adaptado à sua realidade</div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">📱</div>
+          <div class="feat-title">Teleconsulta</div>
+          <div class="feat-desc">Atendimento online com a mesma qualidade e atenção</div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🏠</div>
+          <div class="feat-title">Atendimento domiciliar</div>
+          <div class="feat-desc">Visitas ao domicílio para casos especiais</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-image-side reveal">
+      <div class="about-card">
+        <div class="crm-badge">✓ CRM PR 53972 · Guaratuba</div>
+        <p class="about-quote">
+          Valorizo a escuta atenta, o fortalecimento do vínculo e o cuidado próximo em todas as fases da vida.
+        </p>
+        <p style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.7;">
+          Especialista em Saúde da Família e Comunidade, formada em 2007, com dedicação à promoção da saúde e prevenção de doenças. Atendo em português e espanhol.
+        </p>
+        <div class="about-specialties">
+          <span class="spec-pill">Saúde da Família</span>
+          <span class="spec-pill">Clínica Geral</span>
+          <span class="spec-pill">Doenças Crônicas</span>
+          <span class="spec-pill">Medicina Preventiva</span>
+          <span class="spec-pill">Teleconsulta</span>
+          <span class="spec-pill">Português · Español</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section id="specialties">
+  <div class="spec-header">
+    <div>
+      <div class="section-label">Especialidades</div>
+      <h2 class="section-title">O que <em>tratamos</em></h2>
+    </div>
+    <a href="#contact" class="btn-primary" style="white-space:nowrap">Agendar consulta →</a>
+  </div>
+  <div class="specialties-grid">
+    <div class="spec-card reveal">
+      <div class="spec-card-icon">🫀</div>
+      <div class="spec-card-title">Cardiologia Preventiva</div>
+      <p class="spec-card-desc">Monitoramento da pressão arterial, colesterol e saúde cardiovascular com acompanhamento contínuo.</p>
+      <div class="spec-card-tag">Hipertensão · Dislipidemias</div>
+    </div>
+    <div class="spec-card reveal">
+      <div class="spec-card-icon">🩸</div>
+      <div class="spec-card-title">Endocrinologia & Metabologia</div>
+      <p class="spec-card-desc">Tratamento de diabetes tipo 1 e 2, tireoide, obesidade, deficiências vitamínicas e distúrbios metabólicos.</p>
+      <div class="spec-card-tag">Diabetes · Tireoide · Obesidade</div>
+    </div>
+    <div class="spec-card reveal">
+      <div class="spec-card-icon">🧠</div>
+      <div class="spec-card-title">Saúde Mental Integrada</div>
+      <p class="spec-card-desc">Abordagem humanizada para ansiedade, depressão, insônia e manejo do estresse no cuidado primário.</p>
+      <div class="spec-card-tag">Ansiedade · Depressão · Insônia</div>
+    </div>
+    <div class="spec-card reveal">
+      <div class="spec-card-icon">🦴</div>
+      <div class="spec-card-title">Reumatologia Clínica</div>
+      <p class="spec-card-desc">Diagnóstico e tratamento de artrite, artrose, osteoporose e dores musculoesqueléticas crônicas.</p>
+      <div class="spec-card-tag">Artrite · Artrose · Osteoporose</div>
+    </div>
+    <div class="spec-card reveal">
+      <div class="spec-card-icon">🌸</div>
+      <div class="spec-card-title">Saúde da Mulher</div>
+      <p class="spec-card-desc">Acompanhamento na menopausa, incontinência urinária, saúde hormonal e bem-estar feminino.</p>
+      <div class="spec-card-tag">Menopausa · Hormônios</div>
+    </div>
+    <div class="spec-card reveal">
+      <div class="spec-card-icon">🔬</div>
+      <div class="spec-card-title">Check-up & Medicina Preventiva</div>
+      <p class="spec-card-desc">Avaliação clínica completa com rastreamento de doenças e plano de prevenção personalizado.</p>
+      <div class="spec-card-tag">Check-up · Prevenção</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICES -->
+<section id="prices">
+  <div class="section-label">Transparência</div>
+  <h2 class="section-title">Nossos <em>preços</em></h2>
+  <p class="section-sub">Valores claros e justos. Investir na saúde é o melhor retorno.</p>
+  <div class="prices-grid">
+    <div class="price-card reveal">
+      <div class="price-name">Consulta Clínica Geral</div>
+      <div class="price-value"><small>R$</small> 130</div>
+      <p class="price-note">Primeira consulta ou retorno com renovação de receitas</p>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="badge-featured">Mais popular</div>
+      <div class="price-name">Teleconsulta</div>
+      <div class="price-value"><small>R$</small> 130</div>
+      <p class="price-note">Atendimento online com a mesma qualidade presencial</p>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-name">Atendimento Domiciliar</div>
+      <div class="price-value"><small>R$</small> 200</div>
+      <p class="price-note">Visita ao domicílio para maior conforto e segurança</p>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-name">Programas Especializados</div>
+      <div class="price-value" style="font-size:1.2rem;padding-top:.3rem">Sob consulta</div>
+      <p class="price-note">Obesidade, insônia, depressão, ansiedade, transtornos alimentares</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label">Avaliações</div>
+  <h2 class="section-title">O que dizem nossos <em>pacientes</em></h2>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Atendimento humanizado, profissional extremamente competente, mostra vasto conhecimento. Interessada e atenciosa. Uma das melhores médicas que conheci."</p>
+      <div class="test-author">
+        <div class="test-avatar">P</div>
+        <div>
+          <div class="test-name">Paciente</div>
+          <div class="test-sub">Consulta presencial · Guaratuba</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Ótimo atendimento, super profissional. Explicou tudo detalhadamente, atenciosa, resolutiva. Recomendo muito."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: linear-gradient(135deg, var(--gold), #c8a96e);">P</div>
+        <div>
+          <div class="test-name">Paciente</div>
+          <div class="test-sub">Teleconsulta</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Uma profissional excelente, atende com humanidade, me escutou com paciência. Já é a médica da minha família toda. Obrigada pelo carinho e cuidado."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background: linear-gradient(135deg, #5d8a7e, var(--navy));">P</div>
+        <div>
+          <div class="test-name">Paciente</div>
+          <div class="test-sub">Acompanhamento contínuo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Agendamento</div>
+  <h2 class="section-title">Agende sua <em>consulta</em></h2>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <p class="section-sub" style="margin-bottom:.5rem;">Entre em contato ou preencha o formulário ao lado. Responderemos em breve.</p>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Endereço</div>
+          <div class="contact-val">
+            Rua Dr. Joaquim Menelau de Almeida Torres, 830<br/>
+            <small>83280-000 · Guaratuba, Paraná – PR</small>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Telefone / WhatsApp</div>
+          <div class="contact-val"><a href="tel:+554198886-4810">+55 41 98886-4810</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">Instagram</div>
+          <div class="contact-val">
+            <a href="https://www.instagram.com/dra.mailensosaarcia" target="_blank">@dra.mailensosaarcia</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🌐</div>
+        <div>
+          <div class="contact-label">Agendamento online</div>
+          <div class="contact-val">
+            <a href="https://www.doctoralia.com.br/mailen-sosa-arcia-3/medico-clinico-geral/guaratuba" target="_blank">Doctoralia · Reservar horário</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="schedule-form reveal">
+      <div class="form-title">Solicitar agendamento</div>
+      <form onsubmit="handleForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" placeholder="Seu nome" required />
+          </div>
+          <div class="form-group">
+            <label>Telefone / WhatsApp</label>
+            <input type="tel" placeholder="+55 (41) 9 0000-0000" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Tipo de consulta</label>
+          <select>
+            <option>Consulta clínica geral – R$ 130</option>
+            <option>Teleconsulta – R$ 130</option>
+            <option>Atendimento domiciliar – R$ 200</option>
+            <option>Check-up completo</option>
+            <option>Programa especializado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Motivo / Mensagem <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
+          <textarea placeholder="Descreva brevemente o motivo da consulta…"></textarea>
+        </div>
+        <button type="submit" class="btn-form">Enviar solicitação →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Med<span>í</span>va</div>
+    <p style="margin-top:.4rem">Clínica Médica · Guaratuba, PR</p>
+  </div>
+  <div class="footer-links">
+    <a href="#home">Início</a>
+    <a href="#about">Sobre</a>
+    <a href="#specialties">Especialidades</a>
+    <a href="#contact">Contato</a>
+  </div>
+  <p>© 2026 Medíva Clínica Médica. Todos os direitos reservados.</p>
+</footer>
+
+<!-- Floating CTA -->
+<a href="#contact" class="floating-cta">📅 Agendar consulta</a>
+
+<script>
+  // Hero background zoom-in on load
+  window.addEventListener('load', () => {
+    document.getElementById('heroBg').classList.add('loaded');
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow =
+      window.scrollY > 20 ? '0 2px 24px rgba(13,31,53,.08)' : 'none';
+  });
+
+  // Form handler
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-form');
+    btn.textContent = '✓ Solicitação enviada!';
+    btn.style.background = '#22c55e';
+    setTimeout(() => {
+      btn.textContent = 'Enviar solicitação →';
+      btn.style.background = '';
+    }, 3000);
+  }
+</script>
+</body>
+</html>
